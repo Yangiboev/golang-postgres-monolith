@@ -95,6 +95,8 @@ This is an example of how to list things you need to use the software and how to
    make go
    ```
 
+   if you have done all well, you can see the documentation on your local machine so click ->  [local](http://localhost:8080/swagger/index.html)
+
 
 <!-- USAGE EXAMPLES -->
 ## Usage

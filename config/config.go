@@ -33,7 +33,7 @@ func Load() Config {
 	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "postgres"))
 
 	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
-	c.HTTPPort = cast.ToString(getOrReturnDefault("HTTP_PORT", ":1235"))
+	c.HTTPPort = cast.ToString(getOrReturnDefault("HTTP_PORT", ":8080"))
 
 	return c
 }
