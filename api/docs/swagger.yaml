@@ -1,0 +1,669 @@
+definitions:
+  models.Category:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      parent_id:
+        type: string
+    type: object
+  models.CreateCategoryRequest:
+    properties:
+      name:
+        type: string
+      parent_id:
+        type: string
+    required:
+    - name
+    type: object
+  models.CreatePriceRequest:
+    properties:
+      price:
+        type: integer
+      product_id:
+        type: string
+      retailer_id:
+        type: string
+    required:
+    - price
+    type: object
+  models.CreateProductRequest:
+    properties:
+      category_id:
+        type: string
+      description:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+    type: object
+  models.CreateRetailerRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      website:
+        type: string
+    type: object
+  models.CreateSuccessResponse:
+    properties:
+      id:
+        type: string
+      success:
+        type: boolean
+    type: object
+  models.GetAllCategoriesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.Category'
+        type: array
+      success:
+        type: boolean
+    type: object
+  models.GetAllPricesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.GetPrice'
+        type: array
+      success:
+        type: boolean
+    type: object
+  models.GetAllProductsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.Product'
+        type: array
+      success:
+        type: boolean
+    type: object
+  models.GetAllRetailersResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.Retailer'
+        type: array
+      success:
+        type: boolean
+    type: object
+  models.GetCategory:
+    properties:
+      data:
+        $ref: '#/definitions/models.Category'
+      "true":
+        type: string
+    type: object
+  models.GetPrice:
+    properties:
+      data:
+        $ref: '#/definitions/models.Price'
+      "true":
+        type: string
+    type: object
+  models.GetProduct:
+    properties:
+      category:
+        $ref: '#/definitions/models.Category'
+      description:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+    type: object
+  models.GetRetailer:
+    properties:
+      category:
+        $ref: '#/definitions/models.Category'
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      website:
+        type: string
+    type: object
+  models.InternalServerError:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+  models.Price:
+    properties:
+      id:
+        type: string
+      price:
+        type: integer
+      product_id:
+        type: string
+      retailer_id:
+        type: string
+    type: object
+  models.Product:
+    properties:
+      category_id:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+    type: object
+  models.ResponseError:
+    properties:
+      error:
+        type: object
+    type: object
+  models.Retailer:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      website:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/category:
+    get:
+      consumes:
+      - application/json
+      description: API for getting all categories
+      parameters:
+      - description: name
+        in: path
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetAllCategoriesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Get All Categories
+      tags:
+      - category
+    post:
+      consumes:
+      - application/json
+      description: API for creating category
+      parameters:
+      - description: category
+        in: body
+        name: Category
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateCategoryRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Create category
+      tags:
+      - category
+  /v1/category/{category_id}:
+    get:
+      consumes:
+      - application/json
+      description: API for getting a category
+      parameters:
+      - description: category_id
+        in: path
+        name: category_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetCategory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Get Category
+      tags:
+      - category
+    put:
+      consumes:
+      - application/json
+      description: API for creating category
+      parameters:
+      - description: category_id
+        in: path
+        name: category_id
+        required: true
+        type: string
+      - description: category
+        in: body
+        name: Category
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateCategoryRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Update category
+      tags:
+      - category
+  /v1/price:
+    get:
+      consumes:
+      - application/json
+      description: API for getting all prices
+      parameters:
+      - description: price
+        in: path
+        name: price
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetAllPricesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Get All Prices
+      tags:
+      - price
+    post:
+      consumes:
+      - application/json
+      description: API for creating price
+      parameters:
+      - description: price
+        in: body
+        name: Price
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreatePriceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Create price
+      tags:
+      - price
+  /v1/price/{price_id}:
+    get:
+      consumes:
+      - application/json
+      description: API for getting a price
+      parameters:
+      - description: price_id
+        in: path
+        name: price_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetPrice'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Get Price
+      tags:
+      - price
+    put:
+      consumes:
+      - application/json
+      description: API for creating price
+      parameters:
+      - description: price_id
+        in: path
+        name: price_id
+        required: true
+        type: string
+      - description: price
+        in: body
+        name: Price
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreatePriceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Update price
+      tags:
+      - price
+  /v1/product:
+    get:
+      consumes:
+      - application/json
+      description: API for getting all Products
+      parameters:
+      - description: name
+        in: path
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetAllProductsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Get All Products
+      tags:
+      - product
+    post:
+      consumes:
+      - application/json
+      description: API for creating product
+      parameters:
+      - description: product
+        in: body
+        name: Product
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Create product
+      tags:
+      - product
+  /v1/product/{product_id}:
+    get:
+      consumes:
+      - application/json
+      description: API for getting a product
+      parameters:
+      - description: product_id
+        in: path
+        name: product_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Get Product
+      tags:
+      - product
+    put:
+      consumes:
+      - application/json
+      description: API for creating product
+      parameters:
+      - description: product_id
+        in: path
+        name: product_id
+        required: true
+        type: string
+      - description: product
+        in: body
+        name: Product
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Update product
+      tags:
+      - product
+  /v1/retailer:
+    get:
+      consumes:
+      - application/json
+      description: API for getting all Retailers
+      parameters:
+      - description: name
+        in: path
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetAllRetailersResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Get All Retailers
+      tags:
+      - retailer
+    post:
+      consumes:
+      - application/json
+      description: API for creating retailer
+      parameters:
+      - description: retailer
+        in: body
+        name: Retailer
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateRetailerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Create retailer
+      tags:
+      - retailer
+  /v1/retailer/{retailer_id}:
+    get:
+      consumes:
+      - application/json
+      description: API for getting a retailer
+      parameters:
+      - description: retailer_id
+        in: path
+        name: retailer_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetRetailer'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Get Retailer
+      tags:
+      - retailer
+    put:
+      consumes:
+      - application/json
+      description: API for creating retailer
+      parameters:
+      - description: retailer_id
+        in: path
+        name: retailer_id
+        required: true
+        type: string
+      - description: retailer
+        in: body
+        name: Retailer
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateRetailerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.InternalServerError'
+      summary: Update retailer
+      tags:
+      - retailer
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
