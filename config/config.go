@@ -40,6 +40,7 @@ func Load() Config {
 
 func getOrReturnDefault(key string, defaultValue interface{}) interface{} {
 	_, exists := os.LookupEnv(key)
+
 	if exists {
 		return os.Getenv(key)
 	}

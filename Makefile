@@ -12,6 +12,9 @@ ENV_TAG=latest
 # Including
 include .build_info
 
+go: 
+	go run ${APP_CMD_DIR}/main.go
+
 run:
 	docker-compose -f docker-compose.yml up --force-recreate
 
