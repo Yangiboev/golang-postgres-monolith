@@ -11,7 +11,6 @@
 <br />
 <p align="center">
   <a href="https://github.com/Yangiboev/golang-postgres-monolith">
-    <img src="logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Golang monolith</h3>
@@ -38,9 +37,6 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -50,11 +46,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -85,7 +77,7 @@ To get a local copy up and running follow these simple example steps.
 
 This is an example of how to list things you need to use the software and how to install them.
 
-    - * [Golang](https://golang.org/)
+   * [Golang](https://golang.org/)
 
 
 ### Installation
@@ -142,6 +134,3 @@ Project Link: [https://github.com/Yangiboev/golang-postgres-monolith](https://gi
 
 
 
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-* [Font Awesome](https://fontawesome.com)
