@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend
+  annotations: 
+    # the name of your reserved static IP address
+    kubernetes.io/ingress.global-static-ip-name: backend
+    kubernetes.io/ingress.class: "nginx" #nginx ingress class
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  defaultBackend: # the service you want to expose to the internet
+    service:
+      name: backend #the service name
+      port:
+        number: 8080 #the service port number 
+  rules: 
+  - host: example.iconme.uz  #a registered domain to host your application
+    http:
+      paths: 
+      - path: "/" #this stands for the home route
+        pathType: Prefix
+        backend:
+          service:
+            # stands for the service you want to access when you visit 
+            # the home route of your application  
+            name: backend 
+            port: 
+              number: 8080 # the port number this service listens to
+      - path: "/swagger/index.html" #this stands for the home route
+        pathType: Prefix
+        backend:
+          service:
+            # stands for the service you want to access when you visit 
+            # the home route of your application  
+            name: backend 
+            port: 
+              number: 8080 # the port number this service listens to
+# kubectl get ingress
+# 34.141.73.251

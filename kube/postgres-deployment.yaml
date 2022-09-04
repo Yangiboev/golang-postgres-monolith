@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: dell
   labels:
     app: postgres
   name: postgres
@@ -33,11 +34,11 @@ spec:
             - containerPort: 5432
           resources: {}
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: postgres
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-claim
       restartPolicy: Always
       volumes:
-        - name: postgres
-          persistentVolumeClaim:
-            claimName: postgres
+      - name: postgres-claim
+        persistentVolumeClaim:
+          claimName: postgres-claim
 status: {}

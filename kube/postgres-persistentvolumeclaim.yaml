@@ -1,13 +1,32 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  namespace: dell
+  name: postgres
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100M
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /var/lib/data
+
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: dell
   labels:
     app: postgres
-  name: postgres
+  name: postgres-claim
 spec:
+  storageClassName: manual
   accessModes:
-    - ReadWriteMany
+  - ReadWriteMany
   resources:
     requests:
-      storage: 100Mi
-status: {}
+      storage: 100M
