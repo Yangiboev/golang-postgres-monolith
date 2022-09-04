@@ -1,24 +1,36 @@
-# workspace (GOPATH) configured at /go
-FROM golang:1.13.1 as builder
+FROM golang:1.19 as builder
+# Set necessary env variables needed for our image
+ENV config=docker
+ENV CGO_ENABLED=0
 
+# Move to working directory /bin
+WORKDIR /app
 
-#
-RUN mkdir -p $GOPATH/src/github.com/Yangiboev/golang-postgres-monolith
-WORKDIR $GOPATH/src/github.com/Yangiboev/golang-postgres-monolith
+#  Copy and download dependencies
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
 
-# Copy the local package files to the container's workspace.
-COPY . ./
+# Copy all folder and files to working directory
+COPY . .
 
-# installing depends and build
-RUN export CGO_ENABLED=0 && \
-    export GOOS=linux && \
-    make build && \
-    mv ./bin/api_gateway /
+# Build
+RUN go build -o app cmd/main.go
 
+# Make dir for binary file
+WORKDIR /bin
 
+# Copy binary file from builder file
+RUN cp /app/app .
 
-FROM alpine
-COPY --from=builder api_gateway .
-RUN mkdir config
+# 2 stage build a smaller image
+FROM alpine:3.16
 
-ENTRYPOINT ["/api_gateway"]
+RUN apk --no-cache add ca-certificates
+
+COPY . .
+COPY --from=builder /bin/app /
+
+EXPOSE 5000
+
+ENTRYPOINT ["/app"]
